@@ -101,6 +101,7 @@ COMMON_SRC = \
             flight/feedforward.c \
             flight/mixer.c \
             flight/mixer_init.c \
+            flight/sine_test.c \
             flight/mixer_tricopter.c \
             flight/pid.c \
             flight/pid_init.c \

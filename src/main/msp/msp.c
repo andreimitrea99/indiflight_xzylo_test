@@ -91,6 +91,7 @@
 #include "flight/position.h"
 #include "flight/rpm_filter.h"
 #include "flight/servos.h"
+#include "flight/sine_test.h"
 
 #include "io/asyncfatfs/asyncfatfs.h"
 #include "io/beeper.h"
@@ -2856,6 +2857,19 @@ static mspResult_e mspProcessInCommand(mspDescriptor_t srcDesc, int16_t cmdMSP, 
     case MSP_SET_MOTOR:
         for (int i = 0; i < getMotorCount(); i++) {
             motor_disarmed[i] = motorConvertFromExternal(sbufReadU16(src));
+        }
+        break;
+
+    case MSP_SINE_TEST:
+        if (dataSize < 7) {
+            return MSP_RESULT_ERROR;
+        }
+        {
+            const uint8_t sineMotor = sbufReadU8(src);
+            const uint16_t sineMean = sbufReadU16(src);
+            const uint16_t sineAmp = sbufReadU16(src);
+            const uint16_t sineFreq = sbufReadU16(src);
+            sineTestSet(sineMotor, sineMean, sineAmp, sineFreq);
         }
         break;
 

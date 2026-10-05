@@ -79,6 +79,7 @@
 #include "flight/trajectory_tracker.h"
 #include "flight/rpm_filter.h"
 #include "flight/servos.h"
+#include "flight/sine_test.h"
 #include "flight/nn_control.h"
 
 #include "io/beeper.h"
@@ -1460,6 +1461,7 @@ static FAST_CODE_NOINLINE void subTaskInnerLoopApplyToActuators(timeUs_t current
     if (!ARMING_FLAG(ARMED)) {
         for (int i=0; i < MAX_SUPPORTED_MOTORS; i++)
             motor[i] = motor_disarmed[i];
+        sineTestApply(currentTimeUs);   // bench sine on top of the disarmed motor value
     }
 
 #ifdef HIL_BUILD
